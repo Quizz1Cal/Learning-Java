@@ -1,14 +1,12 @@
-# Learning-Java
-
 Attempted use of git to learn and document java features
 
 Further Research:
 - FOUNDATIONS OF PROGRAMMING: Object-Oriented Design
+- UP TO LEC 4
 
----
-## Java Basics
+# Java Basics
 
-### Syntax
+## Syntax
 
 Simple rules:
 - Java is case-sensitive
@@ -21,7 +19,7 @@ Conventions:
 - Methods/variables start with lowercase e.g. `void doStuff(String withThis) {`	
 - Contants all uppercase e.g. `public static final String FIRSTNAME="Yo";`
 
-##### Common reserved characters:
+#### Common reserved characters:
 
 ```java
 /* multiline comment
@@ -32,99 +30,116 @@ Conventions:
 */
 ```
 
-##### Operators
+#### Operators
 ```java
-/* + concatenates string representations of objects
+// + concatenates string representations of objects
 "1 + 1 = " + 1 + 1 // 1 + 1 = 11
-"1 + 1 = " + (1 + 1) // 1 + 1 = 2
+"1 + 1 = " + (1 + 1) // 1 + 1 = 2. This is due to precedence of ()
 
 ```
 
-#### Simple Java class & execution
+## Objects
 
-##### HelloWorld
+### General
 
+#### Inherited Object Methods
+- `object.equals(object_2)` checks equality of objects (esp. strings)
+
+#### Wrappers & Primitives
+*Primitives*: boolean, byte, char, int, float, double, long & short
+*Wrapper Class*: Boolean, Byte, Character, Integer, Float, Double, Long & Short
+
+Apply wrapper classes to parsing:
+- `parseInt(str_literal)` or `parseDouble(str_literal)`
+*Boxing*: converting a primitive instance to wrapper class. *Unboxing* is the opposite 
+
+### Strings
+- IMMUTABLE VALUE (and hence can only be replaced, not modified)
+   The JVM automatically checks if new string literals point to a pre-existing literal. Allowing
+   modification of the base value would be difficult to detect/regulate - hence, immutability.
+- As always, reference variables are mutuable
 ```java
-public class Main {
-	// Everything below is a class method/attribute CHECK
-	public static void main(String[] args) { // args is conventional name
-		System.out.println("Hello World");
-	}
-}
+String new_str = "fun";
+new_str = str.concat(" times"); // "fun" is lost but "fun times" is newly generated
 ```
+- Stored in the "string constant pool"
+- Use `String` class and double-quotation marks (note: this is marked `final`)
 
-After saving as 'Main.java', navigate to the folder containing it and `javac Main.java` to compile it
-Then execute with `java Main`
-### Objects
+### Arrays
 
-#### Standard datatypes
+### Lambda Expressions
 
-#### Strings
-
-#### Arrays
-
-#### Lambda Expressions
-
-#### Mutability
+### Mutability
 - objects are mutable where instance variables can be changed post-initialisation
 - Classes are considered immutable if
    - a) all attributes are private (so cannot be modified directly)
    - b) only returns copies of mutable instance variables (ditto)
    - c) no setters (no indirect modification)
 
-### Methods
+## Files, I/O
 
-#### Overloading
+- *Command line*: `java Program_aka_arg_0 arg_1 arg_2 arg_3 // All strings`
+- *Scanner*
+   ```java
+   import java.util.Scanner;
+   Scanner scanner_inst = new Scanner(System.in);
+   String str = scanner.nextLine();
+   // primitive ref = scanner.nextPrimitive();
+   ```
 
-#### Method Reference
+## Methods
 
-#### Streams
+### Overloading
 
-#### Variadic Parameters
+### Method Reference
 
-#### Interfaces
+### Streams
 
-### Classes
+### Variadic Parameters
 
-#### Constructors
+### Interfaces
 
-#### Getters & Setters
+## Classes
 
-#### Inheritance
+### Constructors
 
-#### Abstract Classes
+### Getters & Setters
 
-#### Polymorphism
+### Inheritance
 
-#### Enums
+### Abstract Classes
 
-### Methods
+### Polymorphism
 
-### Static vs Instance
+### Enums
 
-#### Static Variables
+## Methods
+
+## Static vs Instance
+
+### Static Variables
 
 Shared by all instances of a class (e.g. all `Students()` instances should 
 have a `public static /*final? */ String SCHOOL_NAME`
 
-#### Static Methods
+### Static Methods
 
 A method that can be called independent of any instance. Typically spits out
 a message. Should not ask for any instance variables
 
-#### Instance Variables
+### Instance Variables
 
 A variable/property/attribute that is unique to each class' instance
 This means modification is possible independent of other instances.
 
-#### Instance Methods
+### Instance Methods
 
 A method that each object can use, but whose output could vary 
 across each instance of an object due to different attribute/property values
 
-### Scope
+## Scope
 
-### Access Modifiers
+## Access Modifiers
 
 The order of privacy from weakest to strongest (cumulative):
 - **Private**: class methods. Typically apply to mutuable instance variables, some methods
@@ -132,11 +147,11 @@ The order of privacy from weakest to strongest (cumulative):
 - **Protected**: additional access to subclasses that inherit from this class
 - **Public**: available at all times in the application
 
-### Generics
+## Generics
 
-### Error Handling (Exceptions)
+## Error Handling (Exceptions)
 
-### Memory
+## Memory
 
 Java has automatic memory allocation and management (the garbage collector):
 
@@ -152,10 +167,21 @@ If no memory is available for a newly requested object, `OutOfMemoryError` is th
 
 - Can use `Runtime.maxMemory()` and `Runtime.totalMemory` to measure memory
 
-## Class Reference
+# Class Reference
 
-#### System
+### System
 
-##### System.out
+#### System.util
+- Scanner
+```java
+   import java.util.Scanner;
+   Scanner scanner_inst = new Scanner(System.in);
+   String str = scanner.nextLine();
+   // primitive ref = scanner.nextPrimitive();
+   ```
+
+#### System.out
 
 - println
+- format(ctrl_str, primitives_and_literals);
+   "% then number$ then flags then width then .precision then type"
