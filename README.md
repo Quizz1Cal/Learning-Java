@@ -1,8 +1,13 @@
 Attempted use of git to learn and document java features
 
-Further Research:
-- FOUNDATIONS OF PROGRAMMING: Object-Oriented Design
-- UP TO LEC 4
+# Lecture Questions/Misc Notes
+- Will learn git in OOSD a bit
+- Brand new assignments, using graphics, some competitiveness
+- Friday starts now so that GF does not impact
+- Use grok to learn Java, use Eclipse after that (GROK = basic stuff)
+- Launch into OOSD from the getgo, no intro to java first!
+- Use hackerrank, codecademy, codesignal for practice problems
+- He will use questions from the grok to test us in midsem
 
 # Java Basics
 
@@ -13,6 +18,8 @@ Simple rules:
 - Identifiers must be unique within their scopes
 - whitespace doesn't affect interpretations; semi-colon is necessary
 - Cannot use keywords for identifiers; must start with alphabetical or underscrores
+- Java entirely uses pointers
+- Conflicting names --> preference is always given to local variables (e.g. arguments)
 
 Conventions:
 - Classes start with uppercase e.g. `class MyClass`
@@ -30,17 +37,25 @@ Conventions:
 */
 ```
 
-#### Operators
+#### Arithmetic and Logic Operators
 ```java
 // + concatenates string representations of objects
 "1 + 1 = " + 1 + 1 // 1 + 1 = 11
 "1 + 1 = " + (1 + 1) // 1 + 1 = 2. This is due to precedence of ()
-
+null // "no object here"
+1 && 0 // evaluates to 1
+1 || 0 // evaluates to 1
 ```
 
 ## Objects
 
-### General
+**Definition**: a specific, concrete instance of a class. Contains state, or dynamic information.
+**Instance**: an object that exists in your code
+
+### General Features
+
+**Instantiation**: To create an object of a class. All objects are null until this occurs.
+- E.g. `Actor RDJ = new Actor(<args>); // the 'new' directs the JVm to allocate memory for it (instantiate it, give it address)
 
 #### Inherited Object Methods
 - `object.equals(object_2)` checks equality of objects (esp. strings)
@@ -101,7 +116,36 @@ new_str = str.concat(" times"); // "fun" is lost but "fun times" is newly genera
 
 ## Classes
 
-### Constructors
+**Definition**: a unit of abstraction in OOP, represents a real world/problem world entity. A template for things/objects/datatypes that have common properties (attributes, methods). 
+
+**Constructors**: A method used to create and initialise an object. Typicallly invoked by 'new'. Have same name as a class. They do NOT return values ... explicitly (there is an output though). More than one is possible.
+- 'Default constructor' is literally an empty constructor
+
+**this**: a reference to a calling object (object that owns/is executing the method). Use to prevent name conflicts b/t class method arguments and class attributes
+
+```java
+// Example constructor
+public <ClassName>(<type> firstAttr, <type> SecondAttr) {
+   this.firstAttr = firstAttr;
+   this.secondAttr = secondAttr;
+} // NOTE THE LACK OF RETURN TYPE DECLARATION
+```
+
+### Some standard class methods
+ 
+*equals*: `public boolean equals(<type> var) { // returns boolean of whether two objects are equal; you define equality`
+   ```java
+public boolean equals(Movie otherMovie) {
+   return this.title.equals(otherMovie.title) && this.rating == otherMovie.rating;
+}
+```
+
+*toString*: Returns string representation of an object. **Automatically called when objects acts like a string** e.g. printing
+--> You define what the string equivalent is with this function
+--> E.g. define toString as `return String.format("%ss are %s!", this.name, this.colour)`
+--> then `System.out.println(new Fruit("apple", "red"))` will print "apples are red!" without explicit reference to ToString
+
+*finalize*: method called when objects are deleted. Use to clean up, record keep etc.
 
 ### Getters & Setters
 
@@ -117,25 +161,20 @@ new_str = str.concat(" times"); // "fun" is lost but "fun times" is newly genera
 
 ## Static vs Instance
 
-### Static Variables
+Advice: make all methods static, remove static only if method uses an instance variable.
 
-Shared by all instances of a class (e.g. all `Students()` instances should 
-have a `public static /*final? */ String SCHOOL_NAME`
+**Static/Class Variables**: Property/attribute shared by all instances of a class. ONE COPY PER CLASS. Const or variable okay
+- E.g. all `Students()` instances should have a `public static /*final? */ String SCHOOL_NAME`
 
-### Static Methods
+**Instance Variables**: A variable/property/attribute that is unique to each class' instance. ONE COPY PER OBJECT
+This means modification is possible independent of other instances. 
+- E.g. `public <type> varName = <value>`
 
-A method that can be called independent of any instance. Typically spits out
-a message. Should not ask for any instance variables
+**Class/Static Methods**: A method/action that can be called independent of any instance ("performed by a class"). Typically spits out a message. DOES NOT REFER TO any instance variables (as these are not instance-independent)
+- E.g. `public static <return-type> methodName(<args>) {...`
 
-### Instance Variables
-
-A variable/property/attribute that is unique to each class' instance
-This means modification is possible independent of other instances.
-
-### Instance Methods
-
-A method that each object can use, but whose output could vary 
-across each instance of an object due to different attribute/property values
+**Instance Methods**: A method that each class' instances can use, but whose output could vary across each instance of an object due to different attribute/property values
+- E.g. `public <return_type> methodName(<args>) {`...
 
 ## Scope
 
