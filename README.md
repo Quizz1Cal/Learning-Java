@@ -1,5 +1,3 @@
-Attempted use of git to learn and document java features
-
 # Lecture Questions/Misc Notes
 - Will learn git in OOSD a bit
 - Brand new assignments, using graphics, some competitiveness
@@ -20,8 +18,10 @@ Simple rules:
 - Cannot use keywords for identifiers; must start with alphabetical or underscrores
 - Java entirely uses pointers
 - Conflicting names --> preference is always given to local variables (e.g. arguments)
+- A solution must have at least one main (LOWERCASE) method in order for it to run, but each class may have at most one main
 
 Conventions:
+- Verbose naming in camelCase
 - Classes start with uppercase e.g. `class MyClass`
 - Methods/variables start with lowercase e.g. `void doStuff(String withThis) {`	
 - Contants all uppercase e.g. `public static final String FIRSTNAME="Yo";`
@@ -43,9 +43,28 @@ Conventions:
 "1 + 1 = " + 1 + 1 // 1 + 1 = 11
 "1 + 1 = " + (1 + 1) // 1 + 1 = 2. This is due to precedence of ()
 null // "no object here"
-1 && 0 // evaluates to 1
-1 || 0 // evaluates to 1
+true && !false // evaluates to true
+1 || 0 // Error: logical operators only work on booleans
+7 % 2 // modulus
 ```
+Use same reiational operators as in C e.g. !=, >= etc.
+Division is only floating point if one number involved is float/double
+To compare floats/doubles, use the epsilon approach
+++, --, +=, -=, \*= and /= are in Java
+
+### Control flow
+Use if, else if, else with {} just as in C
+Use while, do and for loops identically to C
+**Switch/case**:
+```java
+switch (variable) {
+   case val:  // USING BREAKS TO STOP WARNINGS
+   case val:
+   default:
+}
+```
+
+
 
 ## Objects
 
@@ -61,18 +80,37 @@ null // "no object here"
 - `object.equals(object_2)` checks equality of objects (esp. strings)
 
 #### Wrappers & Primitives
-*Primitives*: boolean, byte, char, int, float, double, long & short
-*Wrapper Class*: Boolean, Byte, Character, Integer, Float, Double, Long & Short
+**Primitives**: boolean, byte, char, int, float, double, long & short
+**Wrapper Class**: Boolean, Byte, Character, Integer, Float, Double, Long & Short
 
-Apply wrapper classes to parsing:
-- `parseInt(str_literal)` or `parseDouble(str_literal)`
-*Boxing*: converting a primitive instance to wrapper class. *Unboxing* is the opposite 
+Some Wrapper Class methods:
+- `Integer.rotate` to move bitstring
+- `Integer.signum` for sign
+- `Integer.Reverse()` to reverse bits
+- `Integer.parseInt(str_literal)`
+- `Wrapper.parseWrapper(str_literal)` exists for all wrapper classes
+
+**Boxing**: converting a primitive instance to wrapper class. *Unboxing* is the opposite 
+Manual examples:
+- `Integer i1 = 10;`
+- `Integer i1 = new Integer(10);`
+- `int i1 = new Integer(10);`
+
+**Casting**: not always necessary (e.g. int to float) but should specify regardless to prevent loss/clearly specify
 
 ### Strings
-- IMMUTABLE VALUE (and hence can only be replaced, not modified)
+- IMMUTABLE VALUE (and hence can only be **replaced**, not modified)
    The JVM automatically checks if new string literals point to a pre-existing literal. Allowing
    modification of the base value would be difficult to detect/regulate - hence, immutability.
-- As always, reference variables are mutuable
+- As always, reference variables are mutable
+- Can use + and += for concatentation
+- Typical strings are constants, so declaring them in standard fashion --> s1 == s2 will typically return true
+- However creating new instances with wrapper class (`s3 = new String("Hello")`) will make `"Hello" == s3` FALSE
+- If going to compare strings, use `first_str.equals(other_str)`
+- Character addition/subtraction works as it did in C
+
+**Useful methods**: .length(), .toUpperCase(), .contains(substr), .indexOf(substr), .format()
+- .substring(a, b) attains slice from a to b-1; b presumed end if not included
 ```java
 String new_str = "fun";
 new_str = str.concat(" times"); // "fun" is lost but "fun times" is newly generated
@@ -90,18 +128,36 @@ new_str = str.concat(" times"); // "fun" is lost but "fun times" is newly genera
    - a) all attributes are private (so cannot be modified directly)
    - b) only returns copies of mutable instance variables (ditto)
    - c) no setters (no indirect modification)
+   
+- Use final flag to prevent change. Does not need to be assigned immediately, but can only be assigned once.
+--> CAPITALIZE ANY FINAL VARIABLES
 
 ## Files, I/O
 
-- *Command line*: `java Program_aka_arg_0 arg_1 arg_2 arg_3 // All strings`
+- *Command line*: `java Program_aka_arg_0 arg_1 arg_2 arg_3 // All strings`. Argugments have to be sent all at once!
+- Use "" in command line if the name is extensive
+- Easily access them with `args[0]` etc.
+
 - *Scanner*
    ```java
    import java.util.Scanner;
-   Scanner scanner_inst = new Scanner(System.in);
+   Scanner scanner_inst = new Scanner(System.in); // System.in is simply location from which to derive input
    String str = scanner.nextLine();
    // primitive ref = scanner.nextPrimitive();
    ```
+- Important note: `\n` is a nasty character to remove. Use nextLine() frequently to skip across it, as other next will ignore it (whitespace)
 
+- System.out.print(string) does NOT print whitespace, println DOES
+
+- System.out.format() is equivalent to String.format() but prints it
+- **Control string format**:
+   - % to flag it
+   - 1$ for argument specifier (use < without $ to take 'previous')
+   - +0 for flags (a 0 here will pad with 0 rather than spaces)
+   - 20 for width (n.b. - PRINTS YOUR THING FIRST, + LAST)
+   - .10 for precision
+   - f for type
+   
 ## Methods
 
 ### Overloading
@@ -208,9 +264,11 @@ If no memory is available for a newly requested object, `OutOfMemoryError` is th
 
 # Class Reference
 
-### System
+### java.lang.Math
+- Math.abs(-1)
+- Math.sin, asin, acos, ceil, floor, exp, min/max, pow etc.
 
-#### System.util
+#### java.util
 - Scanner
 ```java
    import java.util.Scanner;
@@ -218,9 +276,11 @@ If no memory is available for a newly requested object, `OutOfMemoryError` is th
    String str = scanner.nextLine();
    // primitive ref = scanner.nextPrimitive();
    ```
+- Scanner.next, .nextLine, .nextInt, .nextDouble, .nextBoolean
+- Scanner.hasNextXXX detects whether it can read XXX next
 
 #### System.out
-
 - println
-- format(ctrl_str, primitives_and_literals);
+- format(ctrl_str, primitives_and_literals) OR printf(ctrl_str, primitives_and_literals)
    "% then number$ then flags then width then .precision then type"
+   
