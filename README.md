@@ -63,7 +63,13 @@ switch (variable) {
    default:
 }
 ```
-
+**Application: continuous input**
+```java
+// Continually request input from standard input that is an integer. Once a non-int is entered, it terminates
+Scanner scanner = new Scanner(system.in);
+while(scanner.hasNextInt()) {
+}
+```
 
 
 ## Objects
