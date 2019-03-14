@@ -125,6 +125,15 @@ new_str = str.concat(" times"); // "fun" is lost but "fun times" is newly genera
 - Use `String` class and double-quotation marks (note: this is marked `final`)
 
 ### Arrays
+1. String[][] name = new String[ROWS][unfixed_cols]{items}
+2. Strings[] name = new String[size]; then name = other_name
+NOTE THAT THIS IS AN ALIAS, AS ARE ANY VALUES THAT POINT TO NON-PRIMITIVES
+
+Useful attributes:
+- array.length
+- array.copyof(array, array_new_size)
+- array.sort()
+- arrays.equal
 
 ### Lambda Expressions
 
