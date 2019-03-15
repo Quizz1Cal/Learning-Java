@@ -23,7 +23,7 @@ Simple rules:
 Conventions:
 - Verbose naming in camelCase
 - Classes start with uppercase e.g. `class MyClass`
-- Methods/variables start with lowercase e.g. `void doStuff(String withThis) {`	
+- Methods/variables start with lowercase e.g. `void doStuff(String withThis) {`
 - Contants all uppercase e.g. `public static final String FIRSTNAME="Yo";`
 
 #### Common reserved characters:
@@ -71,6 +71,12 @@ while(scanner.hasNextInt()) {
 }
 ```
 
+**For**:
+```java
+for (int i = 1; i <= N, i++) {}
+for (int x : array) {}
+```
+
 
 ## Objects
 
@@ -96,7 +102,7 @@ Some Wrapper Class methods:
 - `Integer.parseInt(str_literal)`
 - `Wrapper.parseWrapper(str_literal)` exists for all wrapper classes
 
-**Boxing**: converting a primitive instance to wrapper class. *Unboxing* is the opposite 
+**Boxing**: converting a primitive instance to wrapper class. *Unboxing* is the opposite
 Manual examples:
 - `Integer i1 = 10;`
 - `Integer i1 = new Integer(10);`
@@ -125,15 +131,26 @@ new_str = str.concat(" times"); // "fun" is lost but "fun times" is newly genera
 - Use `String` class and double-quotation marks (note: this is marked `final`)
 
 ### Arrays
-1. String[][] name = new String[ROWS][unfixed_cols]{items}
-2. Strings[] name = new String[size]; then name = other_name
-NOTE THAT THIS IS AN ALIAS, AS ARE ANY VALUES THAT POINT TO NON-PRIMITIVES
+**Definitions**
+1. ```java
+String[][] name = newString[ROWS][unfixed_cols]{items}
+```
+2. ```java
+Strings[] name = new String[size];
+name = other_name
+```
+*NOTE THAT THIS IS AN ALIAS, AS ARE ANY VALUES THAT POINT TO NON-PRIMITIVES*
 
 Useful attributes:
 - array.length
 - array.copyof(array, array_new_size)
 - array.sort()
 - arrays.equal
+
+Use java.util.Arrays:
+- Arrays.toString(nums) (allows Array printing)
+- Arrays.binarySearch(arr, key)
+- Arrays.sort(arr)
 
 ### Lambda Expressions
 
@@ -143,7 +160,7 @@ Useful attributes:
    - a) all attributes are private (so cannot be modified directly)
    - b) only returns copies of mutable instance variables (ditto)
    - c) no setters (no indirect modification)
-   
+
 - Use final flag to prevent change. Does not need to be assigned immediately, but can only be assigned once.
 --> CAPITALIZE ANY FINAL VARIABLES
 
@@ -172,7 +189,37 @@ Useful attributes:
    - 20 for width (n.b. - PRINTS YOUR THING FIRST, + LAST)
    - .10 for precision
    - f for type
-   
+
+### Files
+
+NOTE: When reading csv files, split the words with String[] cols = `text.split(",")`
+
+#### Method 1: BufferedReader
+```Java
+import java.io.FileReader; // Allows reading of chars; simple
+import java.io.BufferedReader; // Allows reading of strings; allows file manipulation
+import java.io.IOException;
+// Can read .txt, .csv, .html
+// In main:
+try (BufferedReader br = new BufferedReader(new FileReader("test.txt"));) { // Will auto-close file
+  String text;
+  while ((text = br.readLine()) != null) {
+    //...
+  }
+} catch (Exception e) {
+  e.printStackTrace();
+}
+
+````
+
+#### Method 2: Scanner
+```java
+try(Scanner scanner = new Scanner(new FileReader("test.txt"));) {
+  while (scanner.hasNextLine()) {//...
+  }
+}
+````
+
 ## Methods
 
 ### Overloading
@@ -187,7 +234,7 @@ Useful attributes:
 
 ## Classes
 
-**Definition**: a unit of abstraction in OOP, represents a real world/problem world entity. A template for things/objects/datatypes that have common properties (attributes, methods). 
+**Definition**: a unit of abstraction in OOP, represents a real world/problem world entity. A template for things/objects/datatypes that have common properties (attributes, methods).
 
 **Constructors**: A method used to create and initialise an object. Typicallly invoked by 'new'. Have same name as a class. They do NOT return values ... explicitly (there is an output though). More than one is possible.
 - 'Default constructor' is literally an empty constructor
@@ -203,7 +250,7 @@ public <ClassName>(<type> firstAttr, <type> SecondAttr) {
 ```
 
 ### Some standard class methods
- 
+
 *equals*: `public boolean equals(<type> var) { // returns boolean of whether two objects are equal; you define equality`
    ```java
 public boolean equals(Movie otherMovie) {
@@ -238,7 +285,7 @@ Advice: make all methods static, remove static only if method uses an instance v
 - E.g. all `Students()` instances should have a `public static /*final? */ String SCHOOL_NAME`
 
 **Instance Variables**: A variable/property/attribute that is unique to each class' instance. ONE COPY PER OBJECT
-This means modification is possible independent of other instances. 
+This means modification is possible independent of other instances.
 - E.g. `public <type> varName = <value>`
 
 **Class/Static Methods**: A method/action that can be called independent of any instance ("performed by a class"). Typically spits out a message. DOES NOT REFER TO any instance variables (as these are not instance-independent)
@@ -298,4 +345,3 @@ If no memory is available for a newly requested object, `OutOfMemoryError` is th
 - println
 - format(ctrl_str, primitives_and_literals) OR printf(ctrl_str, primitives_and_literals)
    "% then number$ then flags then width then .precision then type"
-   
