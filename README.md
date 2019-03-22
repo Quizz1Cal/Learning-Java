@@ -6,6 +6,7 @@
 - Launch into OOSD from the getgo, no intro to java first!
 - Use hackerrank, codecademy, codesignal for practice problems
 - He will use questions from the grok to test us in midsem
+- PRACTICE READING IN CSV
 
 # Java Basics
 
@@ -134,9 +135,12 @@ new_str = str.concat(" times"); // "fun" is lost but "fun times" is newly genera
 **Definitions**
 1. ```java
 String[][] name = newString[ROWS][unfixed_cols]{items}
+// You actually define the sub-arrays LATER (individually) (at which point size must be specified)
 ```
 2. ```java
-Strings[] name = new String[size];
+String[] name = new String[size];
+String line[] = file.nextLine().split(",");
+String[] strings = {"str_1", "str_2"};
 name = other_name
 ```
 *NOTE THAT THIS IS AN ALIAS, AS ARE ANY VALUES THAT POINT TO NON-PRIMITIVES*
@@ -145,12 +149,12 @@ Useful attributes:
 - array.length
 - array.copyof(array, array_new_size)
 - array.sort()
-- arrays.equal
 
 Use java.util.Arrays:
 - Arrays.toString(nums) (allows Array printing)
 - Arrays.binarySearch(arr, key)
 - Arrays.sort(arr)
+- Arrays.equals(arr1, arr2)
 
 ### Lambda Expressions
 
@@ -164,7 +168,7 @@ Use java.util.Arrays:
 - Use final flag to prevent change. Does not need to be assigned immediately, but can only be assigned once.
 --> CAPITALIZE ANY FINAL VARIABLES
 
-## Files, I/O
+## Files, I/O *DO NOT NEED TO MEMORISE*
 
 - *Command line*: `java Program_aka_arg_0 arg_1 arg_2 arg_3 // All strings`. Argugments have to be sent all at once!
 - Use "" in command line if the name is extensive
@@ -197,14 +201,22 @@ NOTE: When reading csv files, split the words with String[] cols = `text.split("
 #### Method 1: BufferedReader
 ```Java
 import java.io.FileReader; // Allows reading of chars; simple
-import java.io.BufferedReader; // Allows reading of strings; allows file manipulation
+import java.io.BufferedReader; // Allows reading of strings as well as characters; allows file manipulation
 import java.io.IOException;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+
 // Can read .txt, .csv, .html
 // In main:
-try (BufferedReader br = new BufferedReader(new FileReader("test.txt"));) { // Will auto-close file
-  String text;
-  while ((text = br.readLine()) != null) {
-    //...
+ // Appends!
+try (BufferedReader br = new BufferedReader(new FileReader("test.txt")));
+  PrintWriter pw = New PrintWriter(new FileWriter("test.txt", true)) { // Will auto-close file
+    String text;
+    while ((text = br.readLine()) != null) {
+      //...
+      pw.println(<stuff>)
+      pw.format(<moar_stuff>)
+    }
   }
 } catch (Exception e) {
   e.printStackTrace();
@@ -328,6 +340,7 @@ If no memory is available for a newly requested object, `OutOfMemoryError` is th
 
 ### java.lang.Math
 - Math.abs(-1)
+- Math.pow(value, power)
 - Math.sin, asin, acos, ceil, floor, exp, min/max, pow etc.
 
 #### java.util
