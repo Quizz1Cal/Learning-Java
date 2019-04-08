@@ -1,11 +1,16 @@
 # Lecture Questions/Misc Notes
-- Will learn git in OOSD a bit
 - Use hackerrank, codecademy, codesignal for practice problems
 - He will use questions from the grok to test us in midsem
 - PRACTICE READING IN CSV
-- Okay so for a class with default attributes, can a subclass access?
+- Okay so for a class with default attributes, can a subclass access? YES. But only subclasses in the same package!
+- PUBLIC AND STATIC ARE DEFAULT?
+- If a method doesn’t use any instance variables, it should be static. APPLY THIS TO PROJECT
+- Use of random
 - Slide 44 of Lecture 9 is still weird to me
 - Slide 47 of Lec9: "Makes the subclass behaviour available when using variables of a superclass" what?
+- Do we need to learn git?
+- Why is slide 13 Lec12 an interface and not an abstract?
+- What the hell is slide 28 Lec12?
 
 ## Brief Slick Notes for Midsem
 - Slick is a java graphics library built on top of *Light Weight Java Gaming Library* (LWJGL)
@@ -13,6 +18,21 @@
 - *`update`*: performs computations for Objects
 - *`delta`*: # ms since last frame
 - *`render`*: Draws objects to screen AND THAT IS IT
+
+# OOP
+
+## Four Principles
+
+### Encapsulation
+- The hiding of data implementation by use of access modifiers and getter/setters, for security and clean, scalable code
+
+### Data Abstraction
+- Breaking down a large system into smaller components - bottom-up implementation
+
+### Polymorphism
+The ability to represent an object in many forms; overriding, overloading, generics etc.
+
+### Inheritance
 
 # Java Basics
 
@@ -227,12 +247,6 @@ try(Scanner scanner = new Scanner(new FileReader("test.txt"));) {
 }
 ```
 
-## Methods
-
-### Overloading
-
-### Interfaces
-
 ## Classes
 
 **Definition**: a unit of abstraction in OOP, represents a real world/problem world entity. A template for things/objects/datatypes that have common properties (attributes, methods).
@@ -270,32 +284,67 @@ public boolean equals(Movie otherMovie) {
 **Definition**: A form of abstraction that permits "generalisation" of similar attributes/methods - pass on common features/behaviours to children.
 - Characterised by "is a" relationship.
 - REUSES code
+- Everything inherits from Object and therefore has toString(), .equals(), .getClass() etc
+
+#### Equality of classes/subclasses
+- getClass returns calling object's class as an Object of type Class
+- instanceof is an operator for instance1 instanceof instance2 --> boolean evaluation, True if inst1 is of type (or subclass of) inst2
+- The object signature is boolean .equals(Object) so you need to include a getClass check in the overriding code
+- In subclasses, just do a super.equals(other) call
 
 **Superclass**: parent/base class.
 **Subclass**: child/derived class that inherits/`extends` common attr/methods. Can extend behaviour as well. **Does NOT inherit private attr/methods**
 - `final` PREVENTS INHERITING
 `extends` flags that you are inheriting from a class. You can only inherit from one class (explicitly).
-`super` is used **AS THE FIRST STATEMENT** in a subclass constructor to invoke a superclass constructor, AND to get superclass methods (e.g. `super().superMethod()`)
+`super()` is used **AS THE FIRST STATEMENT** in a subclass constructor to invoke a superclass constructor, AND to get superclass methods (e.g. `super.superMethod()`)
 
-**Shadowing**: When 2 or more variables are declared with *same name* in *overlapping scopes* e.g. subclass and superclass.
-**Overriding**: Same name and signature, re-defined in subclass. ONLY CAN BE DONE BY A SUBCLASS.
-- Cannot change return type when overriding UNLESS it is subclass of super's return e.g. returns Piece in super but Rook when overriden
-- Cannot increase privacy but can decrease it
-- `final` PREVENTS OVERRIDING = 'a variable, method, or class can only be assigned, declared, defined ONCE'
-**Overloading**: Same name, different signature. Can overload a superclass method in subclass.
-
-**Downcasting**: To treat ...
-- `Piece piece = new Rook()` is okay
-- `Rook rook =  new Piece()` is nonsensical UNLESS...
+**Shadowing**: When 2 or more variables are declared with *same name* in *overlapping scopes* e.g. subclass and superclass. AVOID AT ALL COSTS
 
 ### Abstract Classes
+**Abstract**: Defines a superclass method that is common to subclasses but without implementation, with expectation that a subclass will override (define) functionality.
+- Any class that is incomplete, i.e. a "general/incomplete concept" is also **abstract**. THEY CANNOT BE INSTANTIATED. Need not necessarily have abstract methods.
+- Those that are fully defined are **concrete**
+
+### Interfaces (NOT A CLASS)
+**Definition**: `interface` declares a set of (implied `public static final`) constants and (implied) `public abstract` methods that define behaviour of an object. A "can do" relationship, called <...>able
+- Cannot be instantiated
+- Zero code UNLESS `default` used for a method
+- `Implements` is used to flag that a class will take on the behaviours:
+    - Abstract classes don't **have to** define it all
+    - But any concrete class **has to**
+- MULTIPLE IMPLEMENTATION possible, and extension of interfaces into other interfaces too
+- *Inheritance* generalises shared properties, **similar classes**, "is a"
+- *Interface* generalises shared behaviour, **potentially dissimilar classes**, "can do"
+- *Callum's rule of thumbs*: If it feels like the only thing they have in common is that a) they're an object or b) the actual action, or you feel like the implementation would vary significantly each instance, then it's probably due cause for an interface
+##CHECK: **Whereas abstract classes** define an object, **interfaces** define a subset of an object's properties/actions applicable to some task.
+
+#### Inbuilts
+**Comparable<className>** is an interface (generic) that specifies behaviour for comparing objects of the same class via `public int compareTo(<className> object_or_any_subclass_of_className)` (-1,0,1) --> (< = >)
+- This is then exploited by things like Arrays.sort()
 
 ### Polymorphism
+**Definition**: The ability to use objects/methods in different ways.
+
+- *Overriding*: Same method, varying forms dependent on class **SUBTYPE POLYMORPHISM**
+  - ONLY CAN BE DONE BY A SUBCLASS.
+  - Cannot change return type when overriding UNLESS it is subclass of super's return e.g. returns Piece in super but Rook when overriden
+  - Cannot increase privacy but can decrease it
+  - `final` PREVENTS OVERRIDING = 'a variable, method, or class can only be assigned, declared, defined ONCE'
+- *Overloading*: Same method, varying signatures **AD-HOC POLYMORPHISM**
+  - Can overload a superclass method in subclass.
+- *Substitution*: Use subclasses in place of superclasses **SUBTYPE P.**
+  - **Upcasting**: A child is assigned to a variable of a superclass (ancestor class) e.g. `Robot robot = new AerialRobot()`
+  - **Downcasting**: An ancestor class instance is assigned to a variable of subclass.
+    - `Piece piece = new Rook()` is okay (upcasting)
+    - `Rook rook =  new Piece()` is nonsensical UNLESS you plan on casting it (downcasting) via `Rook actual_rook = (Rook) rook;`
+- *Generics*: Defining parametrised methods/classes **PARAMETRIC P.**
 
 ## Methods
 
-## Static vs Instance
+### Signatures
+`<privacy?> <static?> <return type> <method name>(<arguments>)`
 
+## Static vs Instance
 Advice: make all methods static, remove static only if method uses an instance variable.
 
 **Static/Class Variables**: Property/attribute shared by all instances of a class. ONE COPY PER CLASS. Const or variable okay
