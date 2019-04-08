@@ -1,12 +1,18 @@
 # Lecture Questions/Misc Notes
 - Will learn git in OOSD a bit
-- Brand new assignments, using graphics, some competitiveness
-- Friday starts now so that GF does not impact
-- Use grok to learn Java, use Eclipse after that (GROK = basic stuff)
-- Launch into OOSD from the getgo, no intro to java first!
 - Use hackerrank, codecademy, codesignal for practice problems
 - He will use questions from the grok to test us in midsem
 - PRACTICE READING IN CSV
+- Okay so for a class with default attributes, can a subclass access?
+- Slide 44 of Lecture 9 is still weird to me
+- Slide 47 of Lec9: "Makes the subclass behaviour available when using variables of a superclass" what?
+
+## Brief Slick Notes for Midsem
+- Slick is a java graphics library built on top of *Light Weight Java Gaming Library* (LWJGL)
+- *`init`*: initialises game, sets up objects that are needed to play
+- *`update`*: performs computations for Objects
+- *`delta`*: # ms since last frame
+- *`render`*: Draws objects to screen AND THAT IS IT
 
 # Java Basics
 
@@ -27,7 +33,7 @@ Conventions:
 - Methods/variables start with lowercase e.g. `void doStuff(String withThis) {`
 - Contants all uppercase e.g. `public static final String FIRSTNAME="Yo";`
 
-#### Common reserved characters:
+### Common reserved characters:
 
 ```java
 /* multiline comment
@@ -38,7 +44,7 @@ Conventions:
 */
 ```
 
-#### Arithmetic and Logic Operators
+### Arithmetic and Logic Operators
 ```java
 // + concatenates string representations of objects
 "1 + 1 = " + 1 + 1 // 1 + 1 = 11
@@ -53,7 +59,7 @@ Division is only floating point if one number involved is float/double
 To compare floats/doubles, use the epsilon approach
 ++, --, +=, -=, \*= and /= are in Java
 
-### Control flow
+## Control flow
 Use if, else if, else with {} just as in C
 Use while, do and for loops identically to C
 **Switch/case**:
@@ -101,6 +107,9 @@ Some Wrapper Class methods:
 - `Integer.signum` for sign
 - `Integer.Reverse()` to reverse bits
 - `Integer.parseInt(str_literal)`
+- `Character.isLowerCase(<char>)`
+- `Character.isUpperCase(<char>)`
+- `Character.getType(<char>) == Character.OTHER_PUNCTUATION, .DECIMAL_DIGIT_NUMBER, .LETTER_NUMBER`
 - `Wrapper.parseWrapper(str_literal)` exists for all wrapper classes
 
 **Boxing**: converting a primitive instance to wrapper class. *Unboxing* is the opposite
@@ -122,7 +131,7 @@ Manual examples:
 - If going to compare strings, use `first_str.equals(other_str)`
 - Character addition/subtraction works as it did in C
 
-**Useful methods**: .length(), .toUpperCase(), .contains(substr), .indexOf(substr), .format()
+**Useful methods**: .length(), .toUpperCase(), .contains(substr), .indexOf(substr), .format(), .charAt(index)
 - .substring(a, b) attains slice from a to b-1; b presumed end if not included
 ```java
 String new_str = "fun";
@@ -135,7 +144,7 @@ new_str = str.concat(" times"); // "fun" is lost but "fun times" is newly genera
 **Definitions**
 1. ```java
 String[][] name = newString[ROWS][unfixed_cols]{items}
-// You actually define the sub-arrays LATER (individually) (at which point size must be specified)
+// You actually define the sub-arrays LATER (individually) (at which point size must be specified and EACH subarray must be defined like a proper array... but each of those entries can be any size)
 ```
 2. ```java
 String[] name = new String[size];
@@ -155,18 +164,6 @@ Use java.util.Arrays:
 - Arrays.binarySearch(arr, key)
 - Arrays.sort(arr)
 - Arrays.equals(arr1, arr2)
-
-### Lambda Expressions
-
-### Mutability
-- objects are mutable where instance variables can be changed post-initialisation
-- Classes are considered immutable if
-   - a) all attributes are private (so cannot be modified directly)
-   - b) only returns copies of mutable instance variables (ditto)
-   - c) no setters (no indirect modification)
-
-- Use final flag to prevent change. Does not need to be assigned immediately, but can only be assigned once.
---> CAPITALIZE ANY FINAL VARIABLES
 
 ## Files, I/O *DO NOT NEED TO MEMORISE*
 
@@ -198,18 +195,17 @@ Use java.util.Arrays:
 
 NOTE: When reading csv files, split the words with String[] cols = `text.split(",")`
 
+
 #### Method 1: BufferedReader
-```Java
+```
 import java.io.FileReader; // Allows reading of chars; simple
 import java.io.BufferedReader; // Allows reading of strings as well as characters; allows file manipulation
 import java.io.IOException;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 
-// Can read .txt, .csv, .html
-// In main:
- // Appends!
-try (BufferedReader br = new BufferedReader(new FileReader("test.txt")));
+try {
+  BufferedReader br = new BufferedReader(new FileReader("test.txt"));
   PrintWriter pw = New PrintWriter(new FileWriter("test.txt", true)) { // Will auto-close file
     String text;
     while ((text = br.readLine()) != null) {
@@ -221,8 +217,7 @@ try (BufferedReader br = new BufferedReader(new FileReader("test.txt")));
 } catch (Exception e) {
   e.printStackTrace();
 }
-
-````
+```
 
 #### Method 2: Scanner
 ```java
@@ -230,17 +225,11 @@ try(Scanner scanner = new Scanner(new FileReader("test.txt"));) {
   while (scanner.hasNextLine()) {//...
   }
 }
-````
+```
 
 ## Methods
 
 ### Overloading
-
-### Method Reference
-
-### Streams
-
-### Variadic Parameters
 
 ### Interfaces
 
@@ -277,15 +266,31 @@ public boolean equals(Movie otherMovie) {
 
 *finalize*: method called when objects are deleted. Use to clean up, record keep etc.
 
-### Getters & Setters
-
 ### Inheritance
+**Definition**: A form of abstraction that permits "generalisation" of similar attributes/methods - pass on common features/behaviours to children.
+- Characterised by "is a" relationship.
+- REUSES code
+
+**Superclass**: parent/base class.
+**Subclass**: child/derived class that inherits/`extends` common attr/methods. Can extend behaviour as well. **Does NOT inherit private attr/methods**
+- `final` PREVENTS INHERITING
+`extends` flags that you are inheriting from a class. You can only inherit from one class (explicitly).
+`super` is used **AS THE FIRST STATEMENT** in a subclass constructor to invoke a superclass constructor, AND to get superclass methods (e.g. `super().superMethod()`)
+
+**Shadowing**: When 2 or more variables are declared with *same name* in *overlapping scopes* e.g. subclass and superclass.
+**Overriding**: Same name and signature, re-defined in subclass. ONLY CAN BE DONE BY A SUBCLASS.
+- Cannot change return type when overriding UNLESS it is subclass of super's return e.g. returns Piece in super but Rook when overriden
+- Cannot increase privacy but can decrease it
+- `final` PREVENTS OVERRIDING = 'a variable, method, or class can only be assigned, declared, defined ONCE'
+**Overloading**: Same name, different signature. Can overload a superclass method in subclass.
+
+**Downcasting**: To treat ...
+- `Piece piece = new Rook()` is okay
+- `Rook rook =  new Piece()` is nonsensical UNLESS...
 
 ### Abstract Classes
 
 ### Polymorphism
-
-### Enums
 
 ## Methods
 
@@ -306,19 +311,32 @@ This means modification is possible independent of other instances.
 **Instance Methods**: A method that each class' instances can use, but whose output could vary across each instance of an object due to different attribute/property values
 - E.g. `public <return_type> methodName(<args>) {`...
 
-## Scope
+## Privacy/Encapsulation
 
-## Access Modifiers
-
+- *Information hiding*: Using privacy to hide details
+- *Access control*: Preventing outside class from manipulating properties undesirably
+- *Encapsulation*: Using privacy to restrict unwanted access to object values
 The order of privacy from weakest to strongest (cumulative):
 - **Private**: class methods. Typically apply to mutuable instance variables, some methods
-- Default: additional access to classes in same package
+- Default: **package** - additional access to classes in same package
 - **Protected**: additional access to subclasses that inherit from this class
 - **Public**: available at all times in the application
+- **Getter/accessor**: method that returns instance variable
+- **Setter/mutator**: method that modifies value of an instance variable
+- **Privacy leak**: When a refernce to an external variable is made available and hence undesired alteration possible
+- **Deep copy**: when copying an object, copy references of objects inside it
 
-## Generics
+### Mutability
+- objects are mutable where instance variables can be changed post-initialisation
+- Objects are immutable if NONE of its instance variables can be changed post-initialisation
+- Classes are considered immutable if
+   - a) all attributes are private (so cannot be modified directly)
+   - b) only returns copies of mutable instance variables (ditto)
+   - c) no setters (no indirect modification)
+- *IDEA*: Use a COPY CONSTRUCTOR (e.g. `Actor(Actor actor)` to define a separate copy of an input, so that `new Actor(prev_actor)` does not alias)
 
-## Error Handling (Exceptions)
+- Use `final` flag to prevent change. Does not need to be assigned immediately, but can only be assigned once.
+--> CAPITALIZE ANY FINAL VARIABLES
 
 ## Memory
 
@@ -351,7 +369,7 @@ If no memory is available for a newly requested object, `OutOfMemoryError` is th
    String str = scanner.nextLine();
    // primitive ref = scanner.nextPrimitive();
    ```
-- Scanner.next, .nextLine, .nextInt, .nextDouble, .nextBoolean
+- Scanner.next, .nextLine, .nextInt, .nextDouble, .nextBoolean DOES NOT kill \n... ONLY NEXTLINE
 - Scanner.hasNextXXX detects whether it can read XXX next
 
 #### System.out
