@@ -1,16 +1,18 @@
 # Lecture Questions/Misc Notes
 - Use hackerrank, codecademy, codesignal for practice problems
 - He will use questions from the grok to test us in midsem
-- PRACTICE READING IN CSV
-- Okay so for a class with default attributes, can a subclass access? YES. But only subclasses in the same package!
-- PUBLIC AND STATIC ARE DEFAULT?
-- If a method doesn’t use any instance variables, it should be static. APPLY THIS TO PROJECT
+- Revise arrays, Comparable<T>
+- PUBLIC AND STATIC ARE DEFAULT? (it was in a lecture)
+- So local variables don't have defaults, but instance (class) variables do
 - Use of random
 - Slide 44 of Lecture 9 is still weird to me
 - Slide 47 of Lec9: "Makes the subclass behaviour available when using variables of a superclass" what?
 - Do we need to learn git?
 - Why is slide 13 Lec12 an interface and not an abstract?
 - What the hell is slide 28 Lec12?
+
+# Midsem Sample Questions
+
 
 ## Brief Slick Notes for Midsem
 - Slick is a java graphics library built on top of *Light Weight Java Gaming Library* (LWJGL)
@@ -33,6 +35,9 @@
 The ability to represent an object in many forms; overriding, overloading, generics etc.
 
 ### Inheritance
+
+## Other
+[Programming to the interface - see the comments by Bill the Lizard](https://stackoverflow.com/questions/383947/what-does-it-mean-to-program-to-an-interface)
 
 # Java Basics
 
@@ -147,11 +152,12 @@ Manual examples:
 - As always, reference variables are mutable
 - Can use + and += for concatentation
 - Typical strings are constants, so declaring them in standard fashion --> s1 == s2 will typically return true
+- Review control strings: %1$+020.2f
 - However creating new instances with wrapper class (`s3 = new String("Hello")`) will make `"Hello" == s3` FALSE
 - If going to compare strings, use `first_str.equals(other_str)`
 - Character addition/subtraction works as it did in C
 
-**Useful methods**: .length(), .toUpperCase(), .contains(substr), .indexOf(substr), .format(), .charAt(index)
+**Useful methods**: .length(), .toUpperCase(), .contains(substr), .indexOf(substr), .format(), .charAt(index), .substring(startIndex, lastExclIndex)
 - .substring(a, b) attains slice from a to b-1; b presumed end if not included
 ```java
 String new_str = "fun";
@@ -316,7 +322,12 @@ public boolean equals(Movie otherMovie) {
 - *Inheritance* generalises shared properties, **similar classes**, "is a"
 - *Interface* generalises shared behaviour, **potentially dissimilar classes**, "can do"
 - *Callum's rule of thumbs*: If it feels like the only thing they have in common is that a) they're an object or b) the actual action, or you feel like the implementation would vary significantly each instance, then it's probably due cause for an interface
+> From Oracle Documentation: "Implementing an interface allows a class to become more formal about the behaviour it promises to provide. Interfaces form a contract between the class and the outside world, and this contract is enforced at build time by the compiler. If your class claims to implement an interface, all methods defined by that interface must appear in its source code before the class will successfully compile."
 ##CHECK: **Whereas abstract classes** define an object, **interfaces** define a subset of an object's properties/actions applicable to some task.
+
+#### Functional Interfaces and anonymous implementers
+[Strong explanation on what anonymous implementers are/how](https://stackoverflow.com/questions/16750772/instantiating-interfaces-in-java/35708932)
+**Functional interface**: Only has one (implied abstract) method.
 
 #### Inbuilts
 **Comparable<className>** is an interface (generic) that specifies behaviour for comparing objects of the same class via `public int compareTo(<className> object_or_any_subclass_of_className)` (-1,0,1) --> (< = >)
@@ -332,6 +343,7 @@ public boolean equals(Movie otherMovie) {
   - `final` PREVENTS OVERRIDING = 'a variable, method, or class can only be assigned, declared, defined ONCE'
 - *Overloading*: Same method, varying signatures **AD-HOC POLYMORPHISM**
   - Can overload a superclass method in subclass.
+  - Changing return type *alone* **DOES NOT COUNT AS OVERLOADING**
 - *Substitution*: Use subclasses in place of superclasses **SUBTYPE P.**
   - **Upcasting**: A child is assigned to a variable of a superclass (ancestor class) e.g. `Robot robot = new AerialRobot()`
   - **Downcasting**: An ancestor class instance is assigned to a variable of subclass.
@@ -342,7 +354,7 @@ public boolean equals(Movie otherMovie) {
 ## Methods
 
 ### Signatures
-`<privacy?> <static?> <return type> <method name>(<arguments>)`
+`<privacy?> <static?> <return type> <method name>(<arguments>)` - defined by number and type of arguments, and function name.
 
 ## Static vs Instance
 Advice: make all methods static, remove static only if method uses an instance variable.
@@ -367,12 +379,12 @@ This means modification is possible independent of other instances.
 - *Encapsulation*: Using privacy to restrict unwanted access to object values
 The order of privacy from weakest to strongest (cumulative):
 - **Private**: class methods. Typically apply to mutuable instance variables, some methods
-- Default: **package** - additional access to classes in same package
-- **Protected**: additional access to subclasses that inherit from this class
+- Default is **package** - additional access to classes in *same package*
+- **Protected**: additional access to **subclasses** in *different packages*
 - **Public**: available at all times in the application
 - **Getter/accessor**: method that returns instance variable
 - **Setter/mutator**: method that modifies value of an instance variable
-- **Privacy leak**: When a refernce to an external variable is made available and hence undesired alteration possible
+- **Privacy leak**: When a reference to an external variable is made available and hence undesired alteration possible
 - **Deep copy**: when copying an object, copy references of objects inside it
 
 ### Mutability
