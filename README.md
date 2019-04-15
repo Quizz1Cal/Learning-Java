@@ -168,16 +168,19 @@ new_str = str.concat(" times"); // "fun" is lost but "fun times" is newly genera
 
 ### Arrays
 **Definitions**
-1. ```java
+
+Some text
+
+```java
 String[][] name = newString[ROWS][unfixed_cols]{items}
 // You actually define the sub-arrays LATER (individually) (at which point size must be specified and EACH subarray must be defined like a proper array... but each of those entries can be any size)
-```
-2. ```java
+// OR
 String[] name = new String[size];
 String line[] = file.nextLine().split(",");
 String[] strings = {"str_1", "str_2"};
 name = other_name
 ```
+
 *NOTE THAT THIS IS AN ALIAS, AS ARE ANY VALUES THAT POINT TO NON-PRIMITIVES*
 
 Useful attributes:
@@ -273,16 +276,18 @@ public <ClassName>(<type> firstAttr, <type> SecondAttr) {
 ### Some standard class methods
 
 *equals*: `public boolean equals(<type> var) { // returns boolean of whether two objects are equal; you define equality`
-   ```java
+
+```java
 public boolean equals(Movie otherMovie) {
    return this.title.equals(otherMovie.title) && this.rating == otherMovie.rating;
 }
 ```
 
 *toString*: Returns string representation of an object. **Automatically called when objects acts like a string** e.g. printing
---> You define what the string equivalent is with this function
---> E.g. define toString as `return String.format("%ss are %s!", this.name, this.colour)`
---> then `System.out.println(new Fruit("apple", "red"))` will print "apples are red!" without explicit reference to ToString
+
+- You define what the string equivalent is with this function
+
+- E.g. define toString as `return String.format("%ss are %s!", this.name, this.colour)`. Then `System.out.println(new Fruit("apple", "red"))` will print "apples are red!" without explicit reference to ToString
 
 *finalize*: method called when objects are deleted. Use to clean up, record keep etc.
 
@@ -299,10 +304,11 @@ public boolean equals(Movie otherMovie) {
 - In subclasses, just do a super.equals(other) call
 
 **Superclass**: parent/base class.
+
 **Subclass**: child/derived class that inherits/`extends` common attr/methods. Can extend behaviour as well. **Does NOT inherit private attr/methods**
 - `final` PREVENTS INHERITING
-`extends` flags that you are inheriting from a class. You can only inherit from one class (explicitly).
-`super()` is used **AS THE FIRST STATEMENT** in a subclass constructor to invoke a superclass constructor, AND to get superclass methods (e.g. `super.superMethod()`)
+- `extends` flags that you are inheriting from a class. You can only inherit from one class (explicitly).
+- `super()` is used **AS THE FIRST STATEMENT** in a subclass constructor to invoke a superclass constructor, AND to get superclass methods (e.g. `super.superMethod()`)
 
 **Shadowing**: When 2 or more variables are declared with *same name* in *overlapping scopes* e.g. subclass and superclass. AVOID AT ALL COSTS
 
@@ -377,11 +383,14 @@ This means modification is possible independent of other instances.
 - *Information hiding*: Using privacy to hide details
 - *Access control*: Preventing outside class from manipulating properties undesirably
 - *Encapsulation*: Using privacy to restrict unwanted access to object values
+
 The order of privacy from weakest to strongest (cumulative):
 - **Private**: class methods. Typically apply to mutuable instance variables, some methods
 - Default is **package** - additional access to classes in *same package*
 - **Protected**: additional access to **subclasses** in *different packages*
 - **Public**: available at all times in the application
+
+Other definitions:
 - **Getter/accessor**: method that returns instance variable
 - **Setter/mutator**: method that modifies value of an instance variable
 - **Privacy leak**: When a reference to an external variable is made available and hence undesired alteration possible
@@ -396,8 +405,7 @@ The order of privacy from weakest to strongest (cumulative):
    - c) no setters (no indirect modification)
 - *IDEA*: Use a COPY CONSTRUCTOR (e.g. `Actor(Actor actor)` to define a separate copy of an input, so that `new Actor(prev_actor)` does not alias)
 
-- Use `final` flag to prevent change. Does not need to be assigned immediately, but can only be assigned once.
---> CAPITALIZE ANY FINAL VARIABLES
+- Use `final` flag to prevent change. Does not need to be assigned immediately, but can only be assigned once. CAPITALIZE ANY FINAL VARIABLES
 
 ## Memory
 
