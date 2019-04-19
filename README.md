@@ -7,19 +7,65 @@
 - Use of random
 - Slide 44 of Lecture 9 is still weird to me
 - Slide 47 of Lec9: "Makes the subclass behaviour available when using variables of a superclass" what?
-- Do we need to learn git?
 - Why is slide 13 Lec12 an interface and not an abstract?
 - What the hell is slide 28 Lec12?
+- Multiple associations Lec13 slide32
+- Who 'has' the other in an aggregation relationship? Can you tell from the notation?
 
-# Midsem Sample Questions
+# Unified Modelling Language
 
+**Definition**: A graphical ML that can be used to represent object-oriented ANALYSIS, DESIGN and IMPLEMENTATION (ADI)
 
-## Brief Slick Notes for Midsem
-- Slick is a java graphics library built on top of *Light Weight Java Gaming Library* (LWJGL)
-- *`init`*: initialises game, sets up objects that are needed to play
-- *`update`*: performs computations for Objects
-- *`delta`*: # ms since last frame
-- *`render`*: Draws objects to screen AND THAT IS IT
+### Design algorithm
+1. Identify classes (nouns)
+2. Identify class relationships ('is-a', 'can-do', 'has-a')
+3. Refine classes/relationships
+4. Develop a class diagram
+5. Represent using accepted notation
+
+## Basic representation features
+- Classes consist of a name, **NON-CLASS** attributes (`privacy attribute: type = default`) and methods (`privacy method(p_type: parameter): return type`)
+    - *Classes that are in the UML diagram that are associated with a class are NOT mentioned as attributes*
+- Multiplicity: [10], [1..10], [1..\*], [\*], [0..1, 3..4, 6..\*]
+- Privacy flags: `- ~ # +` for private, package, protected and public (NOTE: Slowly increases from 'flat' to 'plus')
+- Abstract: italicised text
+- Static: underlined entire line
+- Interface: include `<<interface>>` just above name
+- NOTE: All inheritance/interface must 'come down the same line'
+
+## Relationships
+
+### Association
+**Definition**: `has-a` relationship of containment; one class contains another class as an attribute.
+
+**Self-association**: Contains/refers to an instance of it's own class.
+
+**Visual format**: solid line between classes.
+- Can label in middle with name, and at either end with role (e.g. `employee`, `employer`)
+- No arrow: bidirectional containment (e.g. cells have prisoners and prisoners cells)
+- Arrow: unidirectional; points to what is contained.
+
+#### Subtypes of Association
+**Aggregation**: Both parties can exist independently, e.g. a duck and pond.
+- **Visual format**: Uses a white diamond
+
+**Composition**: One class cannot exist without the other, e.g. a uni and a department.
+- **Visual format**: Uses a black diamond that 'points' towards the dominant
+
+### Generalisation (Inheritance)
+**Definition**: An inheritance relationship.
+
+**Visual format**: a white, triangular arrow with solid line. It points to the ancestor
+
+### Realization (Interfaces)
+**Definition**: An interface (can-do) relationship.
+
+**Visual format**: a white, triangular arrow but dotted line. It points to the interface/dominant.
+
+### Dependency
+**Definition**: A weak relationship between classes implying that a change to one may impact the other.
+
+**Visual format**: A dotted class pointing to the dominant (who would influence the other)
 
 # OOP
 
