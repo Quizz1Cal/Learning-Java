@@ -11,6 +11,7 @@
 - What the hell is slide 28 Lec12?
 - Multiple associations Lec13 slide32
 - Who 'has' the other in an aggregation relationship? Can you tell from the notation?
+- Check my ANS for the Death Star Q 2017 Exam Q3
 
 # Unified Modelling Language
 
@@ -31,6 +32,7 @@
 - Abstract: italicised text
 - Static: underlined entire line
 - Interface: include `<<interface>>` just above name
+- final/constant/construtor???
 - NOTE: All inheritance/interface must 'come down the same line'
 
 ## Relationships
@@ -47,7 +49,7 @@
 
 #### Subtypes of Association
 **Aggregation**: Both parties can exist independently, e.g. a duck and pond.
-- **Visual format**: Uses a white diamond
+- **Visual format**: Uses a white diamond.
 
 **Composition**: One class cannot exist without the other, e.g. a uni and a department.
 - **Visual format**: Uses a black diamond that 'points' towards the dominant
@@ -65,7 +67,7 @@
 ### Dependency
 **Definition**: A weak relationship between classes implying that a change to one may impact the other.
 
-**Visual format**: A dotted class pointing to the dominant (who would influence the other)
+**Visual format**: A dotted arrow (white) pointing to the dominant (who would influence the other)
 
 # OOP
 
