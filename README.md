@@ -12,6 +12,7 @@
 - Multiple associations Lec13 slide32
 - Who 'has' the other in an aggregation relationship? Can you tell from the notation?
 - Check my ANS for the Death Star Q 2017 Exam Q3
+- Fairly certain null==null works but never use for class instances
 
 # Unified Modelling Language
 
@@ -455,6 +456,101 @@ Other definitions:
 
 - Use `final` flag to prevent change. Does not need to be assigned immediately, but can only be assigned once. CAPITALIZE ANY FINAL VARIABLES
 
+## Generics
+**Definition**: Allows parametrisation of data types to enable generic logic to be written that applies to any class type.
+- `<T>` ==> T is a *type parameter/variable* (a placeholder) whose value is literally `String`, `Integer`, `Robot` etc. and Java directly substitutes whatever T is into each *placeholder*
+  - This is the 'argument' representation, just use `T` in actual code
+
+### Limitations
+- CANNOT instantiate with a generic e.g. `new T()` not allowed
+- CANNOT create arrays (size unknown) e.g. `new T[]` not allowed
+
+### Comparable<T>
+A non-generic `Comparable` functional interface exists with functional `public int compareTo(Object o)`; this requires a typecheck (`instanceof`) and downcast `(Type)o` and returns ANOTHER flag (-2) if type inconsistent
+
+### Comparator<T>
+Used to sort 'by any mechanism desired' - abstraction of comparison.
+
+```java
+import java.util.Comparator;
+class XComparator implements Comparator<Class> {
+  public int compare(Class c1, Class c2) {
+    if (c1.getX() < c2.getX()) return -1;
+    if (c1.getX() > c2.getX()) return 1;
+    else return 0;
+  }
+}
+class YComparator implements Comparator<Class> {...}
+...
+Collections.sort(ArrayList<Class>, new XComparator()); // Etc
+```
+
+### ArrayList<T>
+- Useful, auto-expands but DOES NOT AUTO-SHRINK
+- Cannot hold primitives (needs class name)
+- Can sort if Comparable<T> implemented
+
+```Java
+import java.util.ArrayList;
+import java.util.Collections;
+
+ArrayList<String> array = new ArrayList<String>();  // This T can be excluded
+array.add(new String(args));
+array.add(new String(args));
+array.toString();
+for (String s: array) {
+    // Stuff
+}
+Collections.sort(array);
+```
+
+### Generic Classes
+**Definition**: A class that is defined with an arbitrary type for a field, parameter or return type.
+- Use `<T>` after class name in definition heading
+- Technically any non-keyword identifier ok but single-cap-letter conventional
+
+Example 1: Basic class
+```java
+
+public class Sample<T1, T2> {
+  public T1 first;
+  public T2 second;
+
+  public Sample(T1 first, T2 second) {
+    this.first = first;
+    this.second = second;
+  }
+}
+...
+Sample<Integer, String> pair = new Sample<Integer, String>(1, "Ayo");
+```
+
+Example 2: Bounds to types using Generic keyword
+```Java
+public class Generic<T extends Robot & Comparable<T> & List<T>> {  
+}
+```
+
+### Generic Method
+**Definition**: Method that accepts arguments/returns args of arbitrary type.
+```java
+/* A function with:
+- Two generic types T and S (these are local to the method just like any arg)
+- Outputs T
+- Takes two arguments of type T and S respectively
+*/
+public <T,S> T genericMethod(T arg1, S arg2);
+```
+
+### Anonymous Inner Class
+**Definition**: A class created 'on the fly' without a new file (or a class of which only one object is created).
+```java
+import java.util.Collections;
+Collections.sort(list, new Comparator<Class> {
+  //...(body of class definition)
+})
+```
+
 ## Memory
 
 Java has automatic memory allocation and management (the garbage collector):
@@ -488,7 +584,18 @@ If no memory is available for a newly requested object, `OutOfMemoryError` is th
    ```
 - Scanner.next, .nextLine, .nextInt, .nextDouble, .nextBoolean DOES NOT kill \n... ONLY NEXTLINE
 - Scanner.hasNextXXX detects whether it can read XXX next
-
+- Collections
+  - Members:
+    - ArrayList
+    - HashSet (no dupes)
+    - PriorityQueue (yeahhh)
+    - TreeSet (fast lookup of uniques)
+  - c.size()
+  - c.contains(Object element)
+  - c.add(E element)
+  - c.remove(Object element)
+  - for (T t: Collection<T>)
+  - c.get(int index) // Abstract list and below
 #### System.out
 - println
 - format(ctrl_str, primitives_and_literals) OR printf(ctrl_str, primitives_and_literals)
