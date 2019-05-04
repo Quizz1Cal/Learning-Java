@@ -1,6 +1,5 @@
 # Lecture Questions/Misc Notes
 - Use hackerrank, codecademy, codesignal for practice problems
-- He will use questions from the grok to test us in midsem
 - Revise arrays, Comparable<T>
 - PUBLIC AND STATIC ARE DEFAULT? (it was in a lecture)
 - So local variables don't have defaults, but instance (class) variables do
@@ -48,9 +47,9 @@
 - No arrow: bidirectional containment (e.g. cells have prisoners and prisoners cells)
 - Arrow: unidirectional; points to what is contained.
 
-#### Subtypes of Association
+#### Subtypes of Association APPARENTLY NOT NEED TO KNOW
 **Aggregation**: Both parties can exist independently, e.g. a duck and pond.
-- **Visual format**: Uses a white diamond.
+- **Visual format**: Uses a white diamond that 'points' towards the dominant. E.g. C has an address D...?
 
 **Composition**: One class cannot exist without the other, e.g. a uni and a department.
 - **Visual format**: Uses a black diamond that 'points' towards the dominant
