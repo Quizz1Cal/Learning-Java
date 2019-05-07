@@ -465,7 +465,7 @@ Other definitions:
 - CANNOT create arrays (size unknown) e.g. `new T[]` not allowed
 
 ### Comparable<T>
-A non-generic `Comparable` functional interface exists with functional `public int compareTo(Object o)`; this requires a typecheck (`instanceof`) and downcast `(Type)o` and returns ANOTHER flag (-2) if type inconsistent
+A non-generic `Comparable` functional interface exists with functional `public int compareTo(Object o)`; OTHERWISE this requires a typecheck (`instanceof`) and downcast `(Type)o` and returns ANOTHER flag (-2) if type inconsistent
 
 ### Comparator<T>
 Used to sort 'by any mechanism desired' - abstraction of comparison.
