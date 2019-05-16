@@ -12,62 +12,8 @@
 - Who 'has' the other in an aggregation relationship? Can you tell from the notation?
 - Check my ANS for the Death Star Q 2017 Exam Q3
 - Fairly certain null==null works but never use for class instances
-
-# Unified Modelling Language
-
-**Definition**: A graphical ML that can be used to represent object-oriented ANALYSIS, DESIGN and IMPLEMENTATION (ADI)
-
-### Design algorithm
-1. Identify classes (nouns)
-2. Identify class relationships ('is-a', 'can-do', 'has-a')
-3. Refine classes/relationships
-4. Develop a class diagram
-5. Represent using accepted notation
-
-## Basic representation features
-- Classes consist of a name, **NON-CLASS** attributes (`privacy attribute: type = default`) and methods (`privacy method(p_type: parameter): return type`)
-    - *Classes that are in the UML diagram that are associated with a class are NOT mentioned as attributes*
-- Multiplicity: [10], [1..10], [1..\*], [\*], [0..1, 3..4, 6..\*]
-- Privacy flags: `- ~ # +` for private, package, protected and public (NOTE: Slowly increases from 'flat' to 'plus')
-- Abstract: italicised text
-- Static: underlined entire line
-- Interface: include `<<interface>>` just above name
-- final/constant/construtor???
-- NOTE: All inheritance/interface must 'come down the same line'
-
-## Relationships
-
-### Association
-**Definition**: `has-a` relationship of containment; one class contains another class as an attribute.
-
-**Self-association**: Contains/refers to an instance of it's own class.
-
-**Visual format**: solid line between classes.
-- Can label in middle with name, and at either end with role (e.g. `employee`, `employer`)
-- No arrow: bidirectional containment (e.g. cells have prisoners and prisoners cells)
-- Arrow: unidirectional; points to what is contained.
-
-#### Subtypes of Association APPARENTLY NOT NEED TO KNOW
-**Aggregation**: Both parties can exist independently, e.g. a duck and pond.
-- **Visual format**: Uses a white diamond that 'points' towards the dominant. E.g. C has an address D...?
-
-**Composition**: One class cannot exist without the other, e.g. a uni and a department.
-- **Visual format**: Uses a black diamond that 'points' towards the dominant
-
-### Generalisation (Inheritance)
-**Definition**: An inheritance relationship.
-
-**Visual format**: a white, triangular arrow with solid line. It points to the ancestor
-
-### Realization (Interfaces)
-**Definition**: An interface (can-do) relationship.
-
-**Visual format**: a white, triangular arrow but dotted line. It points to the interface/dominant.
-
-### Dependency
-**Definition**: A weak relationship between classes implying that a change to one may impact the other.
-
-**Visual format**: A dotted arrow (white) pointing to the dominant (who would influence the other)
+- Clarify the points raised on last slide of Exceptions ('using exceptions' in particular)
+- Slide 37 of Patterns - RPGGame needs a constructor...?
 
 # OOP
 
@@ -548,6 +494,74 @@ import java.util.Collections;
 Collections.sort(list, new Comparator<Class> {
   //...(body of class definition)
 })
+```
+
+## Exceptions
+
+### Errors
+**Syntax/syntactical Error**: Errors where written code is illegal - compiler/editor identified.
+
+**Semantic Error**: Code runs to completion but has incorrect output/operation - software testing identified.
+
+**Runtime Error**: Error that causes premature program crash/end - execution identified.
+- E.g. dividing by zero, out of bounds index accessing (-1 or over capacity), etc.
+- E.g. ArithmeticException, ArrayIndexOutOfBoundsException etc.
+
+### Error Handling
+
+**Defensive Programming**: To explicitly guard against dangerous/invalid conditions.
+- CON: Explicit guarding, lack of a 'backup/alternative', poor abstraction
+- PRO: Better than 'hoping for the best'
+
+**Exception**: A) An error state created by a runtime error. B) An object created by Java to represent the encountered error.
+- *Checked*: Inherited from Exception class, must be EXPLICITLY handled by programmer, otherwise a compiler error occurs.
+> All checked exceptions must be handled with try/catch, OR declaring that such a method could throw the exception
+- *Unchecked*: Inherited from Error class, can be IGNORED by programmer without defensive programming against them. They exist because they can be related to program logic, or are too numerous.  
+> ALL RuntimeExceptions and all Errors are unchecked. This includes ArithmeticException - so the error is NOT flagged at compilation, only at runtime.
+> [Here's the bottom line guideline: If a client can reasonably be expected to recover from an exception, make it a checked exception. If a client cannot do anything to recover from the exception, make it an unchecked exception.](https://docs.oracle.com/javase/tutorial/essential/exceptions/runtime.html)
+
+**Exception Handling**: Code that actively protects your program in the event of exceptions.
+
+Use this structure:
+```Java
+try {
+  stuff;
+} catch (<ExceptionClass> varName) {
+  if_encountered e.g. varName.printStackTrace();
+} ... as many catches as you want {
+} finally {
+  regardless, e.g. clean up;
+}
+```
+
+### Throwing exceptions
+
+**throw**: To respond to an error state by creating an Exception object.
+- Exception throwing = 'you create and throw the exception if criterion are met'
+- Exception handling = 'programming what to do if exception(s) thrown at runtime'
+
+**throws**: A method has the potential to throw, and does not 'deal with it' or it's response differs by application.
+
+```Java
+public method (args) throws PotentialException {
+  ... code ...;
+  if (testing) {
+    throw new PotentialException(args_if_any);
+  }
+}
+```
+
+### Defining Exceptions
+
+Exceptions have a constructor - subclasses should call the super but with an updated error message. This message is retrievable if the error is caught by `e.getMessage()`
+
+```java
+import java.lang.Exception;
+class CustomException extends Exception {
+  public CustomException (args?) {
+    super("message which could include args as well");
+  }
+}
 ```
 
 ## Memory
