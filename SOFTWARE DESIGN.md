@@ -71,6 +71,8 @@
 
 ### Singleton
 
+- Note the PRIVATE CONSTRUCTOR
+
 #### Features
 - *Intent*: Ensure a class has only one instance, provide a global point of access to it.
 - *Motivation*: There are cases where only one instance must be enforced with easy access to it.
@@ -148,3 +150,74 @@
 - *Consequences*: Automatic notification, decouples subject and observer, allows event-driven programming, clearer responsibilities, allows extension (event-handling etc.)
 - *Implementation*: CAN BE ABSTRACT CLASSES OR INTERFACES.
 - *Known Uses*: Project 2 (the World is a subject, and Sprites/Camera observers of it; the Pylon is also a Subject)
+
+# Software Testing and Design
+
+## Documentation
+
+Commenting:
+- Follow Conventions
+- Intended for yourself and other developers
+- Really code should be self-documenting (readable without extra documentation)
+- Comments should 'piece together' if all the code disappeared
+- Attach to blocks of code
+- Placement should be ABOVE code
+
+### Javadoc
+**Definition**: A special comment that can be compiled to HTML. Should document how to use and interact with classes, packages, methods and attributes.
+- Uses *tags* `@param`, `@return` for generating specific documentation
+
+## Design
+
+### Symptoms of Poor Design
+- Rigidity: Hard to modify; changes in one class/method cascade to others
+- Fragility: Modification breaks supposedly unrelated parts
+- Immobility: Cannot be decomposed into reusable modules
+- Viscosity: Writing 'hacks' to preserve the design
+- Complexity: Premature optimisation, un-necessary clever code
+- Repetition: "Cut and Paste" code writing
+- Opacity: Convoluted logic, hard to follow
+
+### GRASP
+**Definition**: A series of guidelines for assigning responsibility to classes in OOD: how to break problem down into modules with clear purpose.
+- General, Responsibility, Assignment, Software, Patterns/principles
+- *Cohesion*: Classes solve clear, focused problems. Aim for MAXIMUM cohesion.
+- *Coupling*: Degree of interaction b/t classes, their methods, or variables. Aim for MINIMUM coupling
+- *Open-Closed Principle*: Classes are open to extension, but closed to modification - a change of functionality means inheritance, not alteration to base class.
+- Encapsulation, Abstraction, Polymorphism
+- *Delegation*: Keeping classes focused by passing work to other classes. Computations are performed IN THE CLASS with MAXIMAL RELEVANT INFORMATION.
+
+## Software Testing
+*Unit*: Small, well-defined component of a s/w system with one, or small # of, responsibilities.
+*Unit Test*: Verifying a unit's operation by testing a single-use case (I/O), intending it to fail.
+- IDEA: When it comes to 'valid input' - does it to ALL the right things it is meant to? (e.g. change the board, change the right position, use the correct char, return true etc.)
+- Easier to test units if components of a unit are further broken down to their simplest case via ABSTRACTION
+*Unit Testing*: Identifying s/w bugs by subjecting every unit to a suite of tests.
+*Manual Testing*: To test code manually, ad-hoc (with the con of not reaching all edge-cases and poor scalability)
+*Automated Testing*: To test code with automated, purpose built s/w. Faster, more reliable, less human reliant.
+
+### TestCase
+*TestCase class*: Class dedicated to testing a single unit. Flag with `@Test` and title `testFUNC/testCLASS etc.`
+*TestRunner class*: Class dedicated to executing tests on a unit.
+
+```java
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class BoardTest {
+    @Test
+    public void testBoard() {
+        Board board = new Board();
+        assertEquals(board.cellIsEmpty(0, 0), true);
+    }
+    @Test
+    public void testValidMove() {
+        Board board = new Board();
+        Move move = new Move(0, 0);
+        assertEquals(board.isValidMove(move), true);
+    }
+}
+```
+
+### Software Testing Jobs
+**Software QA**: Actively works to improve the development process/lifecycle. Directs software testers to conduct tests, primarily to prevent bugs.

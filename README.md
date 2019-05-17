@@ -13,22 +13,23 @@
 - Check my ANS for the Death Star Q 2017 Exam Q3
 - Fairly certain null==null works but never use for class instances
 - Clarify the points raised on last slide of Exceptions ('using exceptions' in particular)
-- Slide 37 of Patterns - RPGGame needs a constructor...?
 
 # OOP
 
 ## Four Principles
 
 ### Encapsulation
-- The hiding of data implementation by use of access modifiers and getter/setters, for security and clean, scalable code
+- The hiding of data implementation by use of access modifiers and getter/setters, for security and clean, scalable code. AKA Information hiding
 
 ### Data Abstraction
-- Breaking down a large system into smaller components - bottom-up implementation
+- Solving problems by creating abstract data types to represent problem components; achieved in OOP through classes, which represent data and actions. Bottom-up implementation
 
 ### Polymorphism
-The ability to represent an object in many forms; overriding, overloading, generics etc.
+The ability to represent an object in many forms; subtype (overriding, substitution), ad hoc (overloading), parametric (generics)
 
 ### Inheritance
+
+### Delegation???
 
 ## Other
 [Programming to the interface - see the comments by Bill the Lizard](https://stackoverflow.com/questions/383947/what-does-it-mean-to-program-to-an-interface)
