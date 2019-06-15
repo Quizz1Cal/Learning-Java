@@ -9,10 +9,12 @@
 - Why is slide 13 Lec12 an interface and not an abstract?
 - What the hell is slide 28 Lec12?
 - Multiple associations Lec13 slide32
-- Who 'has' the other in an aggregation relationship? Can you tell from the notation?
 - Check my ANS for the Death Star Q 2017 Exam Q3
 - Fairly certain null==null works but never use for class instances
 - Clarify the points raised on last slide of Exceptions ('using exceptions' in particular)
+- Lec 22 (Event-D-P) slide 43 - type inference for a generic method from what it's being assigned.
+- Review `String.startsWith`, `s.getchar...`
+- review Arrays methods: `Arrays.asList() etc.`
 
 # OOP
 
@@ -323,8 +325,7 @@ public boolean equals(Movie otherMovie) {
 - *Inheritance* generalises shared properties, **similar classes**, "is a"
 - *Interface* generalises shared behaviour, **potentially dissimilar classes**, "can do"
 - *Callum's rule of thumbs*: If it feels like the only thing they have in common is that a) they're an object or b) the actual action, or you feel like the implementation would vary significantly each instance, then it's probably due cause for an interface
-> From Oracle Documentation: "Implementing an interface allows a class to become more formal about the behaviour it promises to provide. Interfaces form a contract between the class and the outside world, and this contract is enforced at build time by the compiler. If your class claims to implement an interface, all methods defined by that interface must appear in its source code before the class will successfully compile."
-##CHECK: **Whereas abstract classes** define an object, **interfaces** define a subset of an object's properties/actions applicable to some task.
+> From Oracle Documentation: "Implementing an interface allows a class to become more formal about the behaviour it promises to provide. Interfaces form a contract between the class and the outside world, and this contract is enforced at build time by the compiler."
 
 #### Functional Interfaces and anonymous implementers
 [Strong explanation on what anonymous implementers are/how](https://stackoverflow.com/questions/16750772/instantiating-interfaces-in-java/35708932)
@@ -426,7 +427,6 @@ class XComparator implements Comparator<Class> {
     else return 0;
   }
 }
-class YComparator implements Comparator<Class> {...}
 ...
 Collections.sort(ArrayList<Class>, new XComparator()); // Etc
 ```
@@ -535,7 +535,7 @@ try {
 }
 ```
 
-### Throwing exceptions
+### Throwing Exceptions
 
 **throw**: To respond to an error state by creating an Exception object.
 - Exception throwing = 'you create and throw the exception if criterion are met'
@@ -563,6 +563,77 @@ class CustomException extends Exception {
     super("message which could include args as well");
   }
 }
+```
+
+## Advanced Topics
+
+### Enumerated Types
+**enum**: A clas with a finite list of constants.
+- Must list all values
+- By default, static, and are accessed statically.
+- `toString()` will print their name I THINK
+
+### Variadic Parameters
+**Variadic Method**: Methods with an unknown number of arguments. Use `...` to denote, and will IMPLICITLY convert arguments into an array.
+
+### Functional Interface
+**Functional Interface**: Interface with only one abstract method. Flagged as `@FunctionalInterface`
+- E.g. `Predicate<T>` interface with `test (T t)` method.
+- E.g. `UnaryOperator<T>` interface with `T apply (T t)` method.
+- Most useful when combined with Lambda Expressions.
+
+### Lambda Expressions (BRILLIANT)
+**Lambda Expression**: Treats code as data that can be used as an object, e.g. instantiating an interface w/o implementation. Essentially, an 'instance' of a functional interface that allows us to treat the functionality of an interface as an object.
+- E.g. `Predicate<Integer> p1 = i -> i > 0;` allows `p1.test(1)`
+- E.g. `Predicate<Integer> p3 = p1.and(p_other)`
+- Can have 0 or more arguments
+
+#### Functional arguments
+The important thing here is that any lambda expression is a 'substitute' for a unary operator.
+
+##### Example 1
+```java
+public abstract class List<T> {
+  public void replaceAll(UnaryOperator<T> operator);
+}
+```
+...
+```java
+List<String> names = ...;
+names.replaceAll(name -> name.toUpperCase());
+```
+
+##### Example 2
+The use of LE can be done in place of anonymous classes, but are different.
+```java
+starWarsMovies.sort((m1, m2) -> m1.rating - m2.rating);
+```
+
+Is an alternative to (but 'not the same thing' as)
+```java
+SWM.sort(new Comparator<Movie> {
+  public int compare(Movie m1, Movie m2) {
+    return m1.rating - m2.rating;
+  }
+});
+```
+
+### Method References (BRILLIANT)
+
+**Method Reference**: An object that stores a method; can take the place of a lambda expression IF that LE only calls a single method.
+- E.g. `unaryoperator = names.replaceAll(String::toUpperCase)` beats `unaryoperator = names.replaceAll(name -> name.toUpperCase())`.
+- Can be done for static, instance and constructor methods (String::new). Method arguments are IMPLIED.
+
+### Streams
+**Stream**: Series of elements given in sequence, that are automatically put through a pipeline of operations.
+- Useful: `map`, `filter`, `limit` (# iterations), `collect` (into array/etc.), `reduce` (to a single value)
+- Note `Collectors.toList()`, `Collectors.joining(", ")`
+```java
+list.stream()
+      .filter(s -> s.length() > 5)
+      .filter(...)
+      .map(String::toUpperCase)
+      .collect(Collectors.toList());
 ```
 
 ## Memory
